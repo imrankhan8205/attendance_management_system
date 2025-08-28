@@ -10,17 +10,13 @@ dotenv.config();
 
 const app = express();
 
-// Connect to database
 connectDB();
-
-// Middleware
 app.use(cors({
-  origin: true, 
+  origin: true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -30,12 +26,19 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Backend successfully deployed on Render ',
+    author: 'Your Name'
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api', userRoutes);
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
   res.status(err.status || 500).json({
@@ -48,9 +51,10 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(` Server running successfully on port ${PORT}`);
+  console.log(` Access API: http://localhost:${PORT}`);
+  console.log(` Deployment Status: SUCCESS `);
 });
-
 
 server.on('error', (error) => {
   if (error.code === 'EADDRINUSE') {
@@ -59,4 +63,4 @@ server.on('error', (error) => {
   } else {
     console.error('Server error:', error);
   }
-}); 
+});
