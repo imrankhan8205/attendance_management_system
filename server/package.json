@@ -22,8 +22,8 @@
     "nodemon": "^2.0.22"
   },
   "engines": {
-    "node": "18.x"
-  },
+  "node": "18.17.0"
+},
   "keywords": [],
   "author": "",
   "license": "ISC"
